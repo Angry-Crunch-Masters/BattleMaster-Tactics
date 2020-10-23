@@ -21,5 +21,5 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 //Layout is used to return layout size
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return 640, 480
 }
