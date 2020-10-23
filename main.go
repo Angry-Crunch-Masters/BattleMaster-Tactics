@@ -8,9 +8,15 @@ import (
 )
 
 func main() {
+	mainGame := &game.Game{}
+	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: 48}
+	board := &game.Board{}
+	board.SetBoardDefinition(definiton)
+
+	mainGame.SetBoard(board)
 	ebiten.SetWindowSize(640, 480)
 	ebiten.SetWindowTitle("BattleMaster Tactics")
-	if err := ebiten.RunGame(&game.Game{Definition: &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: 48}}); err != nil {
+	if err := ebiten.RunGame(mainGame); err != nil {
 		log.Fatal(err)
 	}
 }
