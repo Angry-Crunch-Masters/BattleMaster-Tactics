@@ -9,7 +9,7 @@ import (
 //Board is struct used to implement board for game, which uses BoardDefinition
 type Board struct {
 	definition *BoardDefinition
-	entities   []BoardEntity
+	entities   []IBoardEntity
 }
 
 //DrawBoard is used to draw board
@@ -20,7 +20,7 @@ func (board *Board) DrawBoard(surface *ebiten.Image) error {
 			return err
 		}
 		for _, element := range board.entities {
-			err = board.definition.DrawElement(surface, &element, "")
+			err = board.definition.DrawElement(surface, element, "")
 			if err != nil {
 				return err
 			}
@@ -37,11 +37,11 @@ func (board *Board) SetBoardDefinition(definition *BoardDefinition) {
 }
 
 //AppendEntity is used to append entity to board
-func (board *Board) AppendEntity(entity *BoardEntity) {
+func (board *Board) AppendEntity(entity IBoardEntity) {
 	if board.entities == nil {
-		board.entities = []BoardEntity{}
+		board.entities = []IBoardEntity{}
 	}
 	if entity != nil {
-		board.entities = append(board.entities, *entity)
+		board.entities = append(board.entities, entity)
 	}
 }

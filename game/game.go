@@ -1,12 +1,19 @@
 package game
 
 import (
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
 )
 
 //Game is struct defining all game logic
 type Game struct {
-	board *Board
+	board   *Board
+	manager *resources.ResourceManager
+}
+
+//InitGame is used to init game
+func (game *Game) InitGame() {
+	game.manager = &resources.ResourceManager{}
 }
 
 //SetBoard is used to set board for game

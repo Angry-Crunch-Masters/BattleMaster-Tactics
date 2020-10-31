@@ -4,13 +4,20 @@ import (
 	"log"
 
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/game"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
 )
 
 func main() {
-	entity1 := &game.BoardEntity{X: 0, Y: 0}
-	entity2 := &game.BoardEntity{X: 5, Y: 1}
+	manager := &resources.ResourceManager{}
+	manager.InitResourceManager()
+	//warriorImage, _, err := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
+
+	entity1 := game.InitEntity(1, 2, "")
+	entity2 := game.InitEntity(5, 7, "")
 	mainGame := &game.Game{}
+	mainGame.InitGame()
+
 	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: 48}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)

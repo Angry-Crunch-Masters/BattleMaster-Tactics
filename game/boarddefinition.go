@@ -37,9 +37,9 @@ func (definition *BoardDefinition) DrawBoard(surface *ebiten.Image) error {
 }
 
 //DrawElement is used to draw element on surface, using rules from definition
-func (definition *BoardDefinition) DrawElement(surface *ebiten.Image, entity *BoardEntity, resource string) error {
+func (definition *BoardDefinition) DrawElement(surface *ebiten.Image, entity IBoardEntity, resource string) error {
 	fieldColor := color.RGBA{0x20, 0xF0, 0x55, 0xFF}
-	ebitenutil.DrawRect(surface, float64(entity.X*definition.FieldSize), float64(entity.Y*definition.FieldSize),
+	ebitenutil.DrawRect(surface, float64(entity.GetX()*definition.FieldSize), float64(entity.GetY()*definition.FieldSize),
 		float64(definition.FieldSize), float64(definition.FieldSize), fieldColor)
 	return nil
 }
