@@ -15,6 +15,7 @@ type Game struct {
 //InitGame is used to init game
 func (game *Game) InitGame() {
 	game.manager = &resources.ResourceManager{}
+	game.manager.InitResourceManager()
 }
 
 //SetBoard is used to set board for game
@@ -30,11 +31,16 @@ func (game *Game) Update() error {
 //Draw is used to draw data on screen
 func (game *Game) Draw(screen *ebiten.Image) {
 	if game.board != nil {
-		game.board.DrawBoard(screen)
+		game.board.DrawBoard(screen, game.manager)
 	}
 }
 
 //Layout is used to return layout size
 func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 640, 480
+	return 256, 256
+}
+
+//AddResource is used to add resource to manager
+func (game *Game) AddResource(item interface{}, name string, resourceType resources.ResourceType) {
+	game.manager.AddResource(item, name, resourceType)
 }

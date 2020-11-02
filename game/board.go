@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image/color"
 
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -15,16 +16,22 @@ type Board struct {
 }
 
 //DrawBoard is used to draw board
-func (board *Board) DrawBoard(surface *ebiten.Image) error {
+func (board *Board) DrawBoard(surface *ebiten.Image, manager *resources.ResourceManager) error {
 	if board.definition != nil {
 		err := board.drawBoard(surface)
 		if err != nil {
 			return err
 		}
 		for _, element := range board.entities {
-			err = board.drawElement(surface, element, "warrior")
-			if err != nil {
-				return err
+			graphics := manager.GetResource(element.GetResourceName(), resources.Graphics)
+			if graphics != nil {
+				asset, ok := graphics.Object.(*ebiten.Image)
+				if ok && err == nil {
+					err = board.drawElement(surface, element, asset)
+				} else {
+					return err
+				}
+
 			}
 		}
 	} else {
@@ -55,9 +62,9 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 		for x := 0; x < board.definition.NumberOfColumns; x++ {
 			for y := 0; y < board.definition.NumberOfRows; y++ {
 				if (x+y)%2 == 1 {
-					fieldColor = color.RGBA{0xAA, 0x10, 0x10, 0xFF}
+					fieldColor = color.RGBA{0x7F, 0x59, 0xB6, 0xFF}
 				} else {
-					fieldColor = color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
+					fieldColor = color.RGBA{0x2A, 0x55, 0x6D, 0xFF}
 				}
 				ebitenutil.DrawRect(surface, float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
 					float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
@@ -70,9 +77,9 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 }
 
 //DrawElement is used to draw element on surface, using rules from definition
-func (board *Board) drawElement(surface *ebiten.Image, entity IEntity, resource string) error {
-	fieldColor := color.RGBA{0x20, 0xF0, 0x55, 0xFF}
-	ebitenutil.DrawRect(surface, float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize),
-		float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
+func (board *Board) drawElement(surface *ebiten.Image, entity IEntity, graphicsResource *ebiten.Image) error {
+	options := &ebiten.DrawImageOptions{}
+	options.GeoM.Translate(float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
+	surface.DrawImage(graphicsResource, options)
 	return nil
 }

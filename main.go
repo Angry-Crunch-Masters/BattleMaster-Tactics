@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 
+	_ "image/png"
+
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/game"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
@@ -11,23 +13,21 @@ import (
 
 func main() {
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
-	manager := &resources.ResourceManager{}
-	manager.InitResourceManager()
-	manager.AddResource(warriorImage, "warrior", resources.Graphics)
 
-	entity1 := game.InitEntity(1, 2, "")
-	entity2 := game.InitEntity(5, 7, "")
+	entity1 := game.InitEntity(1, 1, "warrior")
+	entity2 := game.InitEntity(3, 2, "warrior")
 	mainGame := &game.Game{}
 	mainGame.InitGame()
+	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 
-	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: 48}
+	definiton := &game.BoardDefinition{NumberOfColumns: 4, NumberOfRows: 4, FieldSize: 64}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)
 	board.AppendEntity(entity1)
 	board.AppendEntity(entity2)
 
 	mainGame.SetBoard(board)
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(512, 512)
 	ebiten.SetWindowTitle("BattleMaster Tactics")
 	if err := ebiten.RunGame(mainGame); err != nil {
 		log.Fatal(err)
