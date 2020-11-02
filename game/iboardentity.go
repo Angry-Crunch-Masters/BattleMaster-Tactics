@@ -1,7 +1,7 @@
 package game
 
 //IBoardEntity defines interface for entities
-type IBoardEntity interface {
+type IEntity interface {
 	GetX() int
 	GetY() int
 	GetResourceName() string

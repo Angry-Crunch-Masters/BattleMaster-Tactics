@@ -2,16 +2,17 @@ package resources
 
 //ResourceManager is used as manager for various resources
 type ResourceManager struct {
-	resourcesStack map[ResourceType]ResourceMap
+	resourcesStack map[ResourceType]*ResourceMap
 }
 
 //InitResourceManager inits resource manager
 func (manager *ResourceManager) InitResourceManager() {
-	manager.resourcesStack = make(map[ResourceType]ResourceMap)
+	manager.resourcesStack = make(map[ResourceType]*ResourceMap)
 }
 
 func (manager *ResourceManager) addResourceMap(resourceType ResourceType) {
-	manager.resourcesStack[resourceType] = ResourceMap{}
+	manager.resourcesStack[resourceType] = &ResourceMap{}
+	manager.resourcesStack[resourceType].InitResourceMap()
 }
 
 //AddResource adds resource

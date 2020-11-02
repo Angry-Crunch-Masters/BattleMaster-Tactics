@@ -7,8 +7,9 @@ import (
 
 //Game is struct defining all game logic
 type Game struct {
-	board   *Board
-	manager *resources.ResourceManager
+	board    *Board
+	manager  *resources.ResourceManager
+	entities *IEntity
 }
 
 //InitGame is used to init game

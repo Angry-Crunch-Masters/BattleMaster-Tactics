@@ -6,12 +6,14 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/game"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 func main() {
+	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
 	manager := &resources.ResourceManager{}
 	manager.InitResourceManager()
-	//warriorImage, _, err := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
+	manager.AddResource(warriorImage, "warrior", resources.Graphics)
 
 	entity1 := game.InitEntity(1, 2, "")
 	entity2 := game.InitEntity(5, 7, "")
