@@ -6,7 +6,6 @@ import (
 
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 //Board is struct used to implement board for game, which uses BoardDefinition
@@ -31,7 +30,6 @@ func (board *Board) DrawBoard(surface *ebiten.Image, manager *resources.Resource
 				} else {
 					return err
 				}
-
 			}
 		}
 	} else {
@@ -58,6 +56,8 @@ func (board *Board) AppendEntity(entity IEntity) {
 //DrawBoard is used to draw combat board
 func (board *Board) drawBoard(surface *ebiten.Image) error {
 	var fieldColor color.Color
+	fieldColor = color.RGBA{0x47, 0x84, 0x28, 0xFF}
+	//surface.Fill(fieldColor)
 	if board.definition.NumberOfColumns > 0 && board.definition.NumberOfRows > 0 && board.definition.FieldSize > 0 {
 		for x := 0; x < board.definition.NumberOfColumns; x++ {
 			for y := 0; y < board.definition.NumberOfRows; y++ {
@@ -66,8 +66,8 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 				} else {
 					fieldColor = color.RGBA{0x2A, 0x55, 0x6D, 0xFF}
 				}
-				ebitenutil.DrawRect(surface, float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
-					float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
+				//ebitenutil.DrawRect(surface, float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
+				//float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
 			}
 		}
 	} else {
@@ -80,6 +80,6 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 func (board *Board) drawElement(surface *ebiten.Image, entity IEntity, graphicsResource *ebiten.Image) error {
 	options := &ebiten.DrawImageOptions{}
 	options.GeoM.Translate(float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
-	surface.DrawImage(graphicsResource, options)
+	//surface.DrawImage(graphicsResource, options)
 	return nil
 }

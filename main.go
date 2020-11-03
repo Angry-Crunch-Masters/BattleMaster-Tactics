@@ -12,6 +12,8 @@ import (
 )
 
 func main() {
+	gameSizeX := 1024
+	gameSizeY := 768
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
 
 	entity1 := game.InitEntity(1, 1, "warrior")
@@ -20,14 +22,14 @@ func main() {
 	mainGame.InitGame()
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 
-	definiton := &game.BoardDefinition{NumberOfColumns: 4, NumberOfRows: 4, FieldSize: 64}
+	definiton := &game.BoardDefinition{NumberOfColumns: 20, NumberOfRows: 20, FieldSize: 64}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)
 	board.AppendEntity(entity1)
 	board.AppendEntity(entity2)
 
 	mainGame.SetBoard(board)
-	ebiten.SetWindowSize(512, 512)
+	ebiten.SetWindowSize(gameSizeX, gameSizeY)
 	ebiten.SetWindowTitle("BattleMaster Tactics")
 	if err := ebiten.RunGame(mainGame); err != nil {
 		log.Fatal(err)

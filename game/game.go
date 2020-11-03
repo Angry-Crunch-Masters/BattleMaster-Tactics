@@ -10,6 +10,7 @@ type Game struct {
 	board    *Board
 	manager  *resources.ResourceManager
 	entities *IEntity
+	state    InputState
 }
 
 //InitGame is used to init game
@@ -25,6 +26,12 @@ func (game *Game) SetBoard(board *Board) {
 
 //Update is used to update logic
 func (game *Game) Update() error {
+	click := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+	x, y := ebiten.CursorPosition()
+	game.state = InputState{
+		MouseLeftClicked: click,
+		MouseX:           x,
+		MouseY:           y}
 	return nil
 }
 
@@ -37,7 +44,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 
 //Layout is used to return layout size
 func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 256, 256
+	return outsideWidth, outsideHeight
 }
 
 //AddResource is used to add resource to manager
