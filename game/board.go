@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image/color"
 
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
 )
@@ -15,9 +16,9 @@ type Board struct {
 }
 
 //DrawBoard is used to draw board
-func (board *Board) DrawBoard(surface *ebiten.Image, manager *resources.ResourceManager) error {
+func (board *Board) DrawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager) error {
 	if board.definition != nil {
-		err := board.drawBoard(surface)
+		err := board.drawBoard(canvas)
 		if err != nil {
 			return err
 		}
@@ -26,7 +27,7 @@ func (board *Board) DrawBoard(surface *ebiten.Image, manager *resources.Resource
 			if graphics != nil {
 				asset, ok := graphics.Object.(*ebiten.Image)
 				if ok && err == nil {
-					err = board.drawElement(surface, element, asset)
+					err = board.drawElement(canvas, element, asset)
 				} else {
 					return err
 				}
@@ -54,7 +55,7 @@ func (board *Board) AppendEntity(entity IEntity) {
 }
 
 //DrawBoard is used to draw combat board
-func (board *Board) drawBoard(surface *ebiten.Image) error {
+func (board *Board) drawBoard(canvas graphics.ICanvas) error {
 	var fieldColor color.Color
 	fieldColor = color.RGBA{0x47, 0x84, 0x28, 0xFF}
 	//surface.Fill(fieldColor)
@@ -66,8 +67,8 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 				} else {
 					fieldColor = color.RGBA{0x2A, 0x55, 0x6D, 0xFF}
 				}
-				//ebitenutil.DrawRect(surface, float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
-				//float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
+				canvas.DrawRect(float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
+					float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
 			}
 		}
 	} else {
@@ -77,9 +78,9 @@ func (board *Board) drawBoard(surface *ebiten.Image) error {
 }
 
 //DrawElement is used to draw element on surface, using rules from definition
-func (board *Board) drawElement(surface *ebiten.Image, entity IEntity, graphicsResource *ebiten.Image) error {
+func (board *Board) drawElement(canvas graphics.ICanvas, entity IEntity, graphicsResource *ebiten.Image) error {
 	options := &ebiten.DrawImageOptions{}
 	options.GeoM.Translate(float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
-	//surface.DrawImage(graphicsResource, options)
+	canvas.DrawImage(graphicsResource, options)
 	return nil
 }

@@ -1,6 +1,7 @@
 package game
 
 import (
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
 )
@@ -38,7 +39,9 @@ func (game *Game) Update() error {
 //Draw is used to draw data on screen
 func (game *Game) Draw(screen *ebiten.Image) {
 	if game.board != nil {
-		game.board.DrawBoard(screen, game.manager)
+		mainCanvas := &graphics.Canvas{}
+		mainCanvas.InitCanvas(screen)
+		game.board.DrawBoard(mainCanvas, game.manager)
 	}
 }
 

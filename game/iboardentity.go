@@ -1,6 +1,6 @@
 package game
 
-//IBoardEntity defines interface for entities
+//IEntity defines interface for entities
 type IEntity interface {
 	GetX() int
 	GetY() int
