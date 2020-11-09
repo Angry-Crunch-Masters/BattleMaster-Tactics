@@ -7,6 +7,7 @@ import (
 
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/game"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/strategy"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -19,6 +20,8 @@ func main() {
 	entity1 := game.InitEntity(1, 1, "warrior")
 	entity2 := game.InitEntity(3, 2, "warrior")
 	mainGame := &game.Game{}
+	mainPlayer := &strategy.Player{}
+	mainPlayer.InitPlayer()
 	mainGame.InitGame()
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 
