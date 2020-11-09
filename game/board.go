@@ -79,8 +79,6 @@ func (board *Board) drawBoard(canvas graphics.ICanvas) error {
 
 //DrawElement is used to draw element on surface, using rules from definition
 func (board *Board) drawElement(canvas graphics.ICanvas, entity IEntity, graphicsResource *ebiten.Image) error {
-	options := &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
-	canvas.DrawImage(graphicsResource, options)
+	canvas.DrawImage(graphicsResource, float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
 	return nil
 }

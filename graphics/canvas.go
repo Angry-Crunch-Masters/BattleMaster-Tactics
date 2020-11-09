@@ -19,7 +19,9 @@ func (canvas *Canvas) InitCanvas(surface *ebiten.Image) {
 
 //DrawRect is used to draw rect on canvas
 func (canvas *Canvas) DrawRect(x, y, width, height float64, clr color.Color) {
-	ebitenutil.DrawRect(canvas.surface, x, y, width, height, clr)
+	if canvas.isInBoundary(x, y, width, height) {
+		ebitenutil.DrawRect(canvas.surface, x, y, width, height, clr)
+	}
 }
 
 //Fill fills canvas
@@ -28,6 +30,12 @@ func (canvas *Canvas) Fill(clr color.Color) {
 }
 
 //DrawImage draws image on canvas
-func (canvas *Canvas) DrawImage(img *ebiten.Image, options *ebiten.DrawImageOptions) {
+func (canvas *Canvas) DrawImage(img *ebiten.Image, x, y float64) {
+	options := &ebiten.DrawImageOptions{}
+	options.GeoM.Translate(x, y)
 	canvas.surface.DrawImage(img, options)
+}
+
+func (canvas *Canvas) isInBoundary(x, y, width, height float64) bool {
+	return true
 }

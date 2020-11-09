@@ -10,5 +10,5 @@ import (
 type ICanvas interface {
 	DrawRect(x, y, width, height float64, clr color.Color)
 	Fill(clr color.Color)
-	DrawImage(img *ebiten.Image, options *ebiten.DrawImageOptions)
+	DrawImage(img *ebiten.Image, x, y float64)
 }
