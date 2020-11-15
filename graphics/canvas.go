@@ -9,18 +9,24 @@ import (
 
 //Canvas is structure used for drawing on canvas/surface
 type Canvas struct {
-	surface *ebiten.Image
+	surface          *ebiten.Image
+	xOffset, yOffset float64
+	x, y             float64
 }
 
 //InitCanvas is used to init canvas
 func (canvas *Canvas) InitCanvas(surface *ebiten.Image) {
 	canvas.surface = surface
+	canvas.xOffset = 0
+	canvas.yOffset = 0
+	canvas.x = 0
+	canvas.y = 0
 }
 
 //DrawRect is used to draw rect on canvas
 func (canvas *Canvas) DrawRect(x, y, width, height float64, clr color.Color) {
 	if canvas.isInBoundary(x, y, width, height) {
-		ebitenutil.DrawRect(canvas.surface, x, y, width, height, clr)
+		ebitenutil.DrawRect(canvas.surface, canvas.xOffset+x, canvas.yOffset+y, width, height, clr)
 	}
 }
 
@@ -34,16 +40,21 @@ func (canvas *Canvas) DrawImage(img *ebiten.Image, x, y float64) {
 	width, height := img.Size()
 	if canvas.isInBoundary(x, y, float64(width), float64(height)) {
 		options := &ebiten.DrawImageOptions{}
-		options.GeoM.Translate(x, y)
+		options.GeoM.Translate(x+canvas.xOffset, y+canvas.yOffset)
 		canvas.surface.DrawImage(img, options)
 	}
 }
 
+//SetCameraOffset sets camera offset for canvas
+func (canvas *Canvas) SetCameraOffset(xOffset, yOffset float64) {
+	canvas.xOffset = xOffset
+	canvas.yOffset = yOffset
+}
+
 func (canvas *Canvas) isInBoundary(x, y, width, height float64) bool {
 	canvasWidth, canvasHeight := canvas.surface.Size()
-	canvasX, canvasY := 0.0, 0.0
-	if canvasX < x+width && canvasX+float64(canvasWidth) > x &&
-		canvasY < y+height && canvasY+float64(canvasHeight) > y {
+	if canvas.x < x+width+canvas.xOffset && canvas.x+float64(canvasWidth) > x+canvas.xOffset &&
+		canvas.y < y+height+canvas.yOffset && canvas.y+float64(canvasHeight) > y+canvas.yOffset {
 		return true
 	}
 	return false

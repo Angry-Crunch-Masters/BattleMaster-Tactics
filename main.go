@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	fieldSize := 64.0
 	gameSizeX := 1024
 	gameSizeY := 768
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
@@ -22,10 +23,10 @@ func main() {
 	mainGame := &game.Game{}
 	mainPlayer := &strategy.Player{}
 	mainPlayer.InitPlayer()
-	mainGame.InitGame()
+	mainGame.InitGame(fieldSize)
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 
-	definiton := &game.BoardDefinition{NumberOfColumns: 20, NumberOfRows: 20, FieldSize: 64}
+	definiton := &game.BoardDefinition{NumberOfColumns: 12, NumberOfRows: 10, FieldSize: int(fieldSize)}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)
 	board.AppendEntity(entity1)
