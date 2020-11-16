@@ -1,4 +1,5 @@
-package game
+//Package basic is used for basic structures
+package basic
 
 //BasicEntity is structure for all basic entites
 type BasicEntity struct {

@@ -1,4 +1,4 @@
-package game
+package basic
 
 //IEntity defines interface for entities
 type IEntity interface {

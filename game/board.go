@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image/color"
 
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
@@ -12,7 +13,7 @@ import (
 //Board is struct used to implement board for game, which uses BoardDefinition
 type Board struct {
 	definition *BoardDefinition
-	entities   []IEntity
+	entities   []basic.IEntity
 }
 
 //DrawBoard is used to draw board
@@ -45,9 +46,9 @@ func (board *Board) SetBoardDefinition(definition *BoardDefinition) {
 }
 
 //AppendEntity is used to append entity to board
-func (board *Board) AppendEntity(entity IEntity) {
+func (board *Board) AppendEntity(entity basic.IEntity) {
 	if board.entities == nil {
-		board.entities = []IEntity{}
+		board.entities = []basic.IEntity{}
 	}
 	if entity != nil {
 		board.entities = append(board.entities, entity)
@@ -78,7 +79,7 @@ func (board *Board) drawBoard(canvas graphics.ICanvas) error {
 }
 
 //DrawElement is used to draw element on surface, using rules from definition
-func (board *Board) drawElement(canvas graphics.ICanvas, entity IEntity, graphicsResource *ebiten.Image) error {
+func (board *Board) drawElement(canvas graphics.ICanvas, entity basic.IEntity, graphicsResource *ebiten.Image) error {
 	canvas.DrawImage(graphicsResource, float64(entity.GetX()*board.definition.FieldSize), float64(entity.GetY()*board.definition.FieldSize))
 	return nil
 }

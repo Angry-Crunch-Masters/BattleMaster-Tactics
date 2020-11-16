@@ -1,6 +1,7 @@
 package game
 
 import (
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/hajimehoshi/ebiten"
@@ -11,19 +12,26 @@ import (
 type Game struct {
 	board                        *Board
 	manager                      *resources.ResourceManager
-	entities                     *IEntity
+	entities                     *basic.IEntity
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
 	canvasCameraOffset           float64
+	players                      []basic.IPlayer
 }
 
 //InitGame is used to init game
 func (game *Game) InitGame(canvasCameraOffset float64) {
 	game.manager = &resources.ResourceManager{}
+	game.players = make([]basic.IPlayer, 0)
 	game.manager.InitResourceManager()
 	game.cameraYOffset = 0
 	game.cameraXOffset = 0
 	game.canvasCameraOffset = canvasCameraOffset
+}
+
+//AddPlayer is used to add player for game
+func (game *Game) AddPlayer(player basic.IPlayer) {
+	game.players = append(game.players, player)
 }
 
 //SetBoard is used to set board for game
@@ -77,4 +85,9 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHe
 //AddResource is used to add resource to manager
 func (game *Game) AddResource(item interface{}, name string, resourceType resources.ResourceType) {
 	game.manager.AddResource(item, name, resourceType)
+}
+
+//AppendEntity adds entity to game pool
+func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType) {
+	game.board.AppendEntity(entity)
 }
