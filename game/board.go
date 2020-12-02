@@ -2,7 +2,6 @@ package game
 
 import (
 	"errors"
-	"image/color"
 
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
@@ -19,7 +18,7 @@ type Board struct {
 //DrawBoard is used to draw board
 func (board *Board) DrawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager) error {
 	if board.definition != nil {
-		err := board.drawBoard(canvas)
+		err := board.drawBoard(canvas, manager)
 		if err != nil {
 			return err
 		}
@@ -56,20 +55,15 @@ func (board *Board) AppendEntity(entity basic.IEntity) {
 }
 
 //DrawBoard is used to draw combat board
-func (board *Board) drawBoard(canvas graphics.ICanvas) error {
-	var fieldColor color.Color
-	fieldColor = color.RGBA{0x47, 0x84, 0x28, 0xFF}
-	//surface.Fill(fieldColor)
+func (board *Board) drawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager) error {
+	graphics := manager.GetResource("grass", resources.Graphics)
+	if graphics == nil {
+		return errors.New("")
+	}
 	if board.definition.NumberOfColumns > 0 && board.definition.NumberOfRows > 0 && board.definition.FieldSize > 0 {
 		for x := 0; x < board.definition.NumberOfColumns; x++ {
 			for y := 0; y < board.definition.NumberOfRows; y++ {
-				if (x+y)%2 == 1 {
-					fieldColor = color.RGBA{0x7F, 0x59, 0xB6, 0xFF}
-				} else {
-					fieldColor = color.RGBA{0x2A, 0x55, 0x6D, 0xFF}
-				}
-				canvas.DrawRect(float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize),
-					float64(board.definition.FieldSize), float64(board.definition.FieldSize), fieldColor)
+				canvas.DrawImage(graphics.Object.(*ebiten.Image), float64(x*board.definition.FieldSize), float64(y*board.definition.FieldSize))
 			}
 		}
 	} else {

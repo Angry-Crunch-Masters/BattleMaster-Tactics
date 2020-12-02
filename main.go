@@ -14,28 +14,35 @@ import (
 )
 
 func main() {
-	fieldSize := 64.0
-	gameSizeX := 1024
-	gameSizeY := 768
+	fieldSize := 32.0
+	gameSizeX := 640
+	gameSizeY := 640
+	zoom := 0.5
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
+	grassImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/grass.png")
 
 	mainGame := &game.Game{}
 	creator := strategy.InitPlayerCreator()
 	mainPlayer, playerID := creator.CreatePlayer("player")
-	mainGame.InitGame(fieldSize)
+	anotherPlayer, anotherPlayerID := creator.CreatePlayer("player")
+	mainGame.InitGame(fieldSize, zoom)
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
+	mainGame.AddResource(grassImage, "grass", resources.Graphics)
 	mainGame.AddPlayer(mainPlayer)
+	mainGame.AddPlayer(anotherPlayer)
 
 	entity1 := strategy.InitStrategyEntity(1, 1, "warrior", playerID)
 	entity2 := strategy.InitStrategyEntity(3, 2, "warrior", playerID)
+	entity3 := strategy.InitStrategyEntity(6, 4, "warrior", anotherPlayerID)
 
-	definiton := &game.BoardDefinition{NumberOfColumns: 12, NumberOfRows: 10, FieldSize: int(fieldSize)}
+	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: int(fieldSize)}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)
 	mainGame.SetBoard(board)
 
 	mainGame.AppendEntity(entity1, basic.StrategyEntity)
 	mainGame.AppendEntity(entity2, basic.StrategyEntity)
+	mainGame.AppendEntity(entity3, basic.StrategyEntity)
 
 	ebiten.SetWindowSize(gameSizeX, gameSizeY)
 	ebiten.SetWindowTitle("BattleMaster Tactics")

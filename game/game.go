@@ -16,17 +16,19 @@ type Game struct {
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
 	canvasCameraOffset           float64
+	zoom                         float64
 	players                      []basic.IPlayer
 }
 
 //InitGame is used to init game
-func (game *Game) InitGame(canvasCameraOffset float64) {
+func (game *Game) InitGame(canvasCameraOffset float64, zoom float64) {
 	game.manager = &resources.ResourceManager{}
 	game.players = make([]basic.IPlayer, 0)
 	game.manager.InitResourceManager()
 	game.cameraYOffset = 0
 	game.cameraXOffset = 0
 	game.canvasCameraOffset = canvasCameraOffset
+	game.zoom = zoom
 }
 
 //AddPlayer is used to add player for game
@@ -79,7 +81,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 
 //Layout is used to return layout size
 func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return outsideWidth, outsideHeight
+	return int((float64)(outsideWidth) * game.zoom), int((float64)(outsideHeight) * game.zoom)
 }
 
 //AddResource is used to add resource to manager
