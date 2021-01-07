@@ -12,17 +12,16 @@ import (
 //Board is struct used to implement board for game, which uses BoardDefinition
 type Board struct {
 	definition *BoardDefinition
-	entities   []basic.IEntity
 }
 
 //DrawBoard is used to draw board
-func (board *Board) DrawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager) error {
+func (board *Board) DrawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager, entities []basic.IEntity) error {
 	if board.definition != nil {
 		err := board.drawBoard(canvas, manager)
 		if err != nil {
 			return err
 		}
-		for _, element := range board.entities {
+		for _, element := range entities {
 			graphics := manager.GetResource(element.GetResourceName(), resources.Graphics)
 			if graphics != nil {
 				asset, ok := graphics.Object.(*ebiten.Image)
@@ -42,16 +41,6 @@ func (board *Board) DrawBoard(canvas graphics.ICanvas, manager *resources.Resour
 //SetBoardDefinition is used to set definition of board
 func (board *Board) SetBoardDefinition(definition *BoardDefinition) {
 	board.definition = definition
-}
-
-//AppendEntity is used to append entity to board
-func (board *Board) AppendEntity(entity basic.IEntity) {
-	if board.entities == nil {
-		board.entities = []basic.IEntity{}
-	}
-	if entity != nil {
-		board.entities = append(board.entities, entity)
-	}
 }
 
 //DrawBoard is used to draw combat board

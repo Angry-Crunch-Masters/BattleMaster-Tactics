@@ -12,7 +12,7 @@ import (
 type Game struct {
 	board                        *Board
 	manager                      *resources.ResourceManager
-	entities                     *basic.IEntity
+	entities                     []basic.IEntity
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
 	canvasCameraOffset           float64
@@ -75,7 +75,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 		mainCanvas := &graphics.Canvas{}
 		mainCanvas.InitCanvas(screen)
 		mainCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
-		game.board.DrawBoard(mainCanvas, game.manager)
+		game.board.DrawBoard(mainCanvas, game.manager, game.entities)
 	}
 }
 
@@ -91,5 +91,5 @@ func (game *Game) AddResource(item interface{}, name string, resourceType resour
 
 //AppendEntity adds entity to game pool
 func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType) {
-	game.board.AppendEntity(entity)
+	game.entities = append(game.entities, entity)
 }

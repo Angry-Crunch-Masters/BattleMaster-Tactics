@@ -3,8 +3,14 @@ package basic
 
 //BasicEntity is structure for all basic entites
 type BasicEntity struct {
+	id       uint
 	x, y     int
 	resource string
+}
+
+//GetID is used to get id of entity
+func (entity *BasicEntity) GetID() uint {
+	return entity.id
 }
 
 //GetX is used to get X coordinate of entity

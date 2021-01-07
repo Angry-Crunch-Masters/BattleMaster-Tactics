@@ -2,9 +2,10 @@ package strategy
 
 //Player struct is used for player informations
 type Player struct {
-	entities []IStrategyEntity
-	name     string
-	id       int
+	entities     []IStrategyEntity
+	actualEntity IStrategyEntity
+	name         string
+	id           int
 }
 
 //InitPlayer inits player used in game
