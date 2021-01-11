@@ -11,7 +11,8 @@ import (
 //Game is struct defining all game logic
 type Game struct {
 	board                        *Board
-	manager                      *resources.ResourceManager
+	resourcesManager             *resources.ResourceManager
+	entitesManager               *basic.EntityManager
 	entities                     []basic.IEntity
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
@@ -22,9 +23,10 @@ type Game struct {
 
 //InitGame is used to init game
 func (game *Game) InitGame(canvasCameraOffset float64, zoom float64) {
-	game.manager = &resources.ResourceManager{}
+	game.resourcesManager = &resources.ResourceManager{}
+	game.entitesManager = basic.CreateEntityManager()
 	game.players = make([]basic.IPlayer, 0)
-	game.manager.InitResourceManager()
+	game.resourcesManager.InitResourceManager()
 	game.cameraYOffset = 0
 	game.cameraXOffset = 0
 	game.canvasCameraOffset = canvasCameraOffset
@@ -75,7 +77,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 		mainCanvas := &graphics.Canvas{}
 		mainCanvas.InitCanvas(screen)
 		mainCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
-		game.board.DrawBoard(mainCanvas, game.manager, game.entities)
+		game.board.DrawBoard(mainCanvas, game.resourcesManager, *game.entitesManager.GetEntities())
 	}
 }
 
@@ -84,12 +86,12 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHe
 	return int((float64)(outsideWidth) * game.zoom), int((float64)(outsideHeight) * game.zoom)
 }
 
-//AddResource is used to add resource to manager
+//AddResource is used to add resource to resourcesManager
 func (game *Game) AddResource(item interface{}, name string, resourceType resources.ResourceType) {
-	game.manager.AddResource(item, name, resourceType)
+	game.resourcesManager.AddResource(item, name, resourceType)
 }
 
 //AppendEntity adds entity to game pool
 func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType) {
-	game.entities = append(game.entities, entity)
+	game.entitesManager.AddExistingEntity(entity)
 }

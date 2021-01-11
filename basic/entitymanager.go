@@ -26,3 +26,12 @@ func (manager *EntityManager) AddEntity(entityType EntityType, x, y int, resourc
 	}
 	return nil
 }
+
+func (manager *EntityManager) AddExistingEntity(entity IEntity) {
+	manager.entities = append(manager.entities, entity)
+}
+
+//GetEntities gets pointer to entites array
+func (manager *EntityManager) GetEntities() *[]IEntity {
+	return &manager.entities
+}
