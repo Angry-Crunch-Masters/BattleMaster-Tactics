@@ -6,6 +6,7 @@ type EntityManager struct {
 	entities []IEntity
 }
 
+//CreateEntityManager is used to create entity manager
 func CreateEntityManager() *EntityManager {
 	manager := &EntityManager{}
 	manager.creators = make(map[EntityType]IEntityCreator)
@@ -18,9 +19,9 @@ func (manager *EntityManager) AddEntityCreator(creator IEntityCreator, entityTyp
 	}
 }
 
-func (manager *EntityManager) AddEntity(entityType EntityType, x, y int, resource string, data interface{}) IEntity {
+func (manager *EntityManager) AddEntity(entityType EntityType, inputData EntityBasicData) IEntity {
 	if _, ok := manager.creators[entityType]; ok {
-		entity := manager.creators[entityType].CreateEntity(x, y, resource, data)
+		entity := manager.creators[entityType].CreateEntity(inputData)
 		manager.entities = append(manager.entities, entity)
 		return entity
 	}

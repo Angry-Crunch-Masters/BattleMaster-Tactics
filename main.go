@@ -23,26 +23,20 @@ func main() {
 
 	mainGame := &game.Game{}
 	creator := strategy.InitPlayerCreator()
-	mainPlayer, playerID := creator.CreatePlayer("player")
-	anotherPlayer, anotherPlayerID := creator.CreatePlayer("player")
+	mainPlayer, _ := creator.CreatePlayer("player")
 	mainGame.InitGame(fieldSize, zoom)
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 	mainGame.AddResource(grassImage, "grass", resources.Graphics)
 	mainGame.AddPlayer(mainPlayer)
-	mainGame.AddPlayer(anotherPlayer)
-
-	entity1 := strategy.InitStrategyEntity(1, 1, "warrior", playerID)
-	entity2 := strategy.InitStrategyEntity(3, 2, "warrior", playerID)
-	entity3 := strategy.InitStrategyEntity(6, 4, "warrior", anotherPlayerID)
+	mainGame.AddCreators(map[basic.EntityType]basic.IEntityCreator{basic.StrategyEntity: &strategy.BasicStrategyEntityCreator{}})
 
 	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: int(fieldSize)}
 	board := &game.Board{}
 	board.SetBoardDefinition(definiton)
 	mainGame.SetBoard(board)
 
-	mainGame.AppendEntity(entity1, basic.StrategyEntity)
-	mainGame.AppendEntity(entity2, basic.StrategyEntity)
-	mainGame.AppendEntity(entity3, basic.StrategyEntity)
+	mainGame.CreateEntity(basic.EntityBasicData{X: 6, Y: 4, Resource: "warrior",
+		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
 
 	ebiten.SetWindowSize(gameSizeX, gameSizeY)
 	ebiten.SetWindowTitle("BattleMaster Tactics")

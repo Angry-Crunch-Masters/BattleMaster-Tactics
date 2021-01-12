@@ -12,7 +12,7 @@ import (
 type Game struct {
 	board                        *Board
 	resourcesManager             *resources.ResourceManager
-	entitesManager               *basic.EntityManager
+	entitiesManager              *basic.EntityManager
 	entities                     []basic.IEntity
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
@@ -24,7 +24,7 @@ type Game struct {
 //InitGame is used to init game
 func (game *Game) InitGame(canvasCameraOffset float64, zoom float64) {
 	game.resourcesManager = &resources.ResourceManager{}
-	game.entitesManager = basic.CreateEntityManager()
+	game.entitiesManager = basic.CreateEntityManager()
 	game.players = make([]basic.IPlayer, 0)
 	game.resourcesManager.InitResourceManager()
 	game.cameraYOffset = 0
@@ -77,7 +77,14 @@ func (game *Game) Draw(screen *ebiten.Image) {
 		mainCanvas := &graphics.Canvas{}
 		mainCanvas.InitCanvas(screen)
 		mainCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
-		game.board.DrawBoard(mainCanvas, game.resourcesManager, *game.entitesManager.GetEntities())
+		game.board.DrawBoard(mainCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
+	}
+}
+
+//AddCreators adds creators for game
+func (game *Game) AddCreators(creators map[basic.EntityType]basic.IEntityCreator) {
+	for typeKey, element := range creators {
+		game.entitiesManager.AddEntityCreator(element, typeKey)
 	}
 }
 
@@ -93,5 +100,10 @@ func (game *Game) AddResource(item interface{}, name string, resourceType resour
 
 //AppendEntity adds entity to game pool
 func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType) {
-	game.entitesManager.AddExistingEntity(entity)
+	game.entitiesManager.AddExistingEntity(entity)
+}
+
+//CreateEntity creates entity for game
+func (game *Game) CreateEntity(inputData basic.EntityBasicData, entityType basic.EntityType) {
+	game.entitiesManager.AddEntity(entityType, inputData)
 }

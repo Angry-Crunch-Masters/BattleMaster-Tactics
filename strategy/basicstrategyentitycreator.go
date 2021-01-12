@@ -7,10 +7,10 @@ type BasicStrategyEntityCreator struct {
 }
 
 //CreateEntity creates entity using BasicStrategyEntityCreator
-func (creator *BasicStrategyEntityCreator) CreateEntity(x, y int, resource string, entityData interface{}) basic.IEntity {
-	strategyAsset, ok := entityData.(*AdditionalEntityData)
+func (creator *BasicStrategyEntityCreator) CreateEntity(inputData basic.EntityBasicData) basic.IEntity {
+	strategyAsset, ok := inputData.Data.(*AdditionalEntityData)
 	if ok {
-		return InitStrategyEntity(x, y, resource, strategyAsset.ownerID)
+		return InitStrategyEntity(inputData.X, inputData.Y, inputData.Resource, strategyAsset.OwnerID)
 	}
 	return nil
 }
