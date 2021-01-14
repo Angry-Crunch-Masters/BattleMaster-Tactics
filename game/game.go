@@ -19,6 +19,7 @@ type Game struct {
 	canvasCameraOffset           float64
 	zoom                         float64
 	players                      []basic.IPlayer
+	mainPlayer                   basic.IPlayer
 }
 
 //InitGame is used to init game
@@ -34,8 +35,11 @@ func (game *Game) InitGame(canvasCameraOffset float64, zoom float64) {
 }
 
 //AddPlayer is used to add player for game
-func (game *Game) AddPlayer(player basic.IPlayer) {
+func (game *Game) AddPlayer(player basic.IPlayer, isMainPlayer bool) {
 	game.players = append(game.players, player)
+	if isMainPlayer {
+		game.mainPlayer = player
+	}
 }
 
 //SetBoard is used to set board for game
@@ -53,6 +57,7 @@ func (game *Game) Update() error {
 		MouseY:           y,
 	}
 	game.getCameraOffsetInfo()
+	game.getUnitInfo()
 	return nil
 }
 
@@ -68,6 +73,17 @@ func (game *Game) getCameraOffsetInfo() {
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
 		game.cameraYOffset -= game.canvasCameraOffset
+	}
+}
+
+func (game *Game) getUnitInfo() {
+	if game.mainPlayer != nil {
+		if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
+			game.mainPlayer.PreviousEntity()
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyE) {
+			game.mainPlayer.NextEntity()
+		}
 	}
 }
 
@@ -111,5 +127,5 @@ func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType
 
 //CreateEntity creates entity for game
 func (game *Game) CreateEntity(inputData basic.EntityBasicData, entityType basic.EntityType) {
-	game.entitiesManager.AddEntity(entityType, inputData)
+	game.mainPlayer.AddEntity(game.entitiesManager.AddEntity(entityType, inputData))
 }

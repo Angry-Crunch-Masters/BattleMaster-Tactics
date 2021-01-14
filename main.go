@@ -21,13 +21,16 @@ func main() {
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
 	grassImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/grass.png")
 
+	checkedImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/checked.png")
+
 	mainGame := &game.Game{}
 	creator := strategy.InitPlayerCreator()
 	mainPlayer, _ := creator.CreatePlayer("player")
 	mainGame.InitGame(fieldSize, zoom)
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 	mainGame.AddResource(grassImage, "grass", resources.Graphics)
-	mainGame.AddPlayer(mainPlayer)
+	mainGame.AddResource(checkedImage, "checked", resources.Graphics)
+	mainGame.AddPlayer(mainPlayer, true)
 	mainGame.AddCreators(map[basic.EntityType]basic.IEntityCreator{basic.StrategyEntity: &strategy.BasicStrategyEntityCreator{}})
 
 	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: int(fieldSize)}
