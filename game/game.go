@@ -76,8 +76,14 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	if game.board != nil {
 		mainCanvas := &graphics.Canvas{}
 		mainCanvas.InitCanvas(screen)
-		mainCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
-		game.board.DrawBoard(mainCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
+		mainCanvas.SetCameraOffset(0, 0)
+
+		gameImage := ebiten.NewImage(256, 256)
+		gameCanvas := &graphics.Canvas{}
+		gameCanvas.InitCanvas(gameImage)
+		gameCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
+		game.board.DrawBoard(gameCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
+		mainCanvas.DrawCanvas(gameCanvas, 32, 32)
 	}
 }
 

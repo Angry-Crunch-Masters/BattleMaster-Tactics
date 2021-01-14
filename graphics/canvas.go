@@ -59,3 +59,15 @@ func (canvas *Canvas) isInBoundary(x, y, width, height float64) bool {
 	}
 	return false
 }
+
+func (canvas *Canvas) getCanvasSize() (width int, height int) {
+	return canvas.surface.Size()
+}
+
+//DrawCanvas draws another canvas on top of canvas
+func (canvas *Canvas) DrawCanvas(drawnCanvas *Canvas, x, y float64) {
+	width, height := canvas.getCanvasSize()
+	if canvas.isInBoundary(drawnCanvas.x, drawnCanvas.y, float64(width), float64(height)) {
+		canvas.DrawImage(drawnCanvas.surface, x, y)
+	}
+}

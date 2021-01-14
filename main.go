@@ -37,6 +37,10 @@ func main() {
 
 	mainGame.CreateEntity(basic.EntityBasicData{X: 6, Y: 4, Resource: "warrior",
 		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
+	mainGame.CreateEntity(basic.EntityBasicData{X: 4, Y: 6, Resource: "warrior",
+		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
+	mainGame.CreateEntity(basic.EntityBasicData{X: 3, Y: 3, Resource: "warrior",
+		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
 
 	ebiten.SetWindowSize(gameSizeX, gameSizeY)
 	ebiten.SetWindowTitle("BattleMaster Tactics")

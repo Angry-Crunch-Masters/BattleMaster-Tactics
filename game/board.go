@@ -43,6 +43,11 @@ func (board *Board) SetBoardDefinition(definition *BoardDefinition) {
 	board.definition = definition
 }
 
+//GetBoardDefinition gets board definition
+func (board *Board) GetBoardDefinition() *BoardDefinition {
+	return board.definition
+}
+
 //DrawBoard is used to draw combat board
 func (board *Board) drawBoard(canvas graphics.ICanvas, manager *resources.ResourceManager) error {
 	graphics := manager.GetResource("grass", resources.Graphics)
