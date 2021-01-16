@@ -100,6 +100,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 		gameCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
 		game.board.DrawBoard(gameCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
 		mainCanvas.DrawCanvas(gameCanvas, 32, 32)
+		mainCanvas.DrawImage(game.resourcesManager.GetResource("frame", resources.Graphics).Object.(*ebiten.Image), 0, 0)
 	}
 }
 
