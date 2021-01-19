@@ -4,6 +4,7 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/strategy"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 )
@@ -19,7 +20,7 @@ type Game struct {
 	canvasCameraOffset           float64
 	zoom                         float64
 	players                      []basic.IPlayer
-	mainPlayer                   basic.IPlayer
+	mainPlayer                   *strategy.Player
 }
 
 //InitGame is used to init game
@@ -37,8 +38,10 @@ func (game *Game) InitGame(canvasCameraOffset float64, zoom float64) {
 //AddPlayer is used to add player for game
 func (game *Game) AddPlayer(player basic.IPlayer, isMainPlayer bool) {
 	game.players = append(game.players, player)
-	if isMainPlayer {
-		game.mainPlayer = player
+	mainPlayer, ok := player.(*strategy.Player)
+	if isMainPlayer && ok {
+		game.mainPlayer = mainPlayer
+		game.mainPlayer.SetResourcesProvider(game.resourcesManager)
 	}
 }
 
@@ -99,8 +102,12 @@ func (game *Game) Draw(screen *ebiten.Image) {
 		gameCanvas.InitCanvas(gameImage)
 		gameCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
 		game.board.DrawBoard(gameCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
+		if game.mainPlayer != nil {
+			game.mainPlayer.ApplyEffects(gameCanvas)
+		}
 		mainCanvas.DrawCanvas(gameCanvas, 32, 32)
 		mainCanvas.DrawImage(game.resourcesManager.GetResource("frame", resources.Graphics).Object.(*ebiten.Image), 0, 0)
+		mainCanvas.DrawImage(game.resourcesManager.GetResource("actions", resources.Graphics).Object.(*ebiten.Image), 112, 288)
 	}
 }
 

@@ -21,8 +21,9 @@ func main() {
 	warriorImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/warrior.png")
 	grassImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/grass.png")
 
-	checkedImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/checked.png")
+	checkedImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/choosen.png")
 	frameImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/frame.png")
+	actionsImage, _, _ := ebitenutil.NewImageFromFile("data/gfx/actions.png")
 
 	mainGame := &game.Game{}
 	creator := strategy.InitPlayerCreator()
@@ -32,6 +33,7 @@ func main() {
 	mainGame.AddResource(grassImage, "grass", resources.Graphics)
 	mainGame.AddResource(checkedImage, "checked", resources.Graphics)
 	mainGame.AddResource(frameImage, "frame", resources.Graphics)
+	mainGame.AddResource(actionsImage, "actions", resources.Graphics)
 	mainGame.AddPlayer(mainPlayer, true)
 	mainGame.AddCreators(map[basic.EntityType]basic.IEntityCreator{basic.StrategyEntity: &strategy.BasicStrategyEntityCreator{}})
 

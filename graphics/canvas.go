@@ -65,9 +65,19 @@ func (canvas *Canvas) getCanvasSize() (width int, height int) {
 }
 
 //DrawCanvas draws another canvas on top of canvas
-func (canvas *Canvas) DrawCanvas(drawnCanvas *Canvas, x, y float64) {
+func (canvas *Canvas) DrawCanvas(drawnCanvas ICanvas, x, y float64) {
 	width, height := canvas.getCanvasSize()
-	if canvas.isInBoundary(drawnCanvas.x, drawnCanvas.y, float64(width), float64(height)) {
-		canvas.DrawImage(drawnCanvas.surface, x, y)
+	canvasX, canvasY := canvas.GetPosition()
+	if canvas.isInBoundary(canvasX, canvasY, float64(width), float64(height)) {
+		canvas.DrawImage(drawnCanvas.getSurface(), x, y)
 	}
+}
+
+//GetPosition is method to get position of surface
+func (canvas *Canvas) GetPosition() (float64, float64) {
+	return canvas.x, canvas.y
+}
+
+func (canvas *Canvas) getSurface() *ebiten.Image {
+	return canvas.surface
 }

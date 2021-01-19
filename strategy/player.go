@@ -1,6 +1,11 @@
 package strategy
 
-import "github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
+import (
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
+	"github.com/hajimehoshi/ebiten"
+)
 
 //Player struct is used for player informations
 type Player struct {
@@ -8,6 +13,7 @@ type Player struct {
 	actualEntityCounter int
 	name                string
 	id                  int
+	resourceManager     resources.IResourceManager
 }
 
 //InitPlayer inits player used in game
@@ -54,4 +60,20 @@ func (player *Player) PreviousEntity() {
 //GetPlayerID is used to get id of player
 func (player *Player) GetPlayerID() int {
 	return player.id
+}
+
+func (player *Player) ApplyEffects(canvas graphics.ICanvas) {
+	if player.resourceManager != nil {
+		checkedResource := player.resourceManager.GetResource("checked", resources.Graphics)
+		checkedBitmap, ok := checkedResource.Object.(*ebiten.Image)
+		if ok && (len(player.entities)-1 >= player.actualEntityCounter) {
+			x := player.entities[player.actualEntityCounter].GetX()
+			y := player.entities[player.actualEntityCounter].GetY()
+			canvas.DrawImage(checkedBitmap, float64(x*32), float64(y*32))
+		}
+	}
+}
+
+func (player *Player) SetResourcesProvider(provider resources.IResourceManager) {
+	player.resourceManager = provider
 }
