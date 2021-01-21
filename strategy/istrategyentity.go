@@ -6,4 +6,5 @@ import "github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 type IStrategyEntity interface {
 	basic.IEntity
 	GetOwner() int
+	GetActionPointsNumber() int
 }

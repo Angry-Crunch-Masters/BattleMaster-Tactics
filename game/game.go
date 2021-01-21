@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
+	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/logic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/strategy"
 	"github.com/hajimehoshi/ebiten"
@@ -21,6 +22,7 @@ type Game struct {
 	zoom                         float64
 	players                      []basic.IPlayer
 	mainPlayer                   *strategy.Player
+	gameState                    logic.GameState
 }
 
 //InitGame is used to init game
