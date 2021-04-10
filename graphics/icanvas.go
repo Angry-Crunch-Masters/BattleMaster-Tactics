@@ -3,7 +3,7 @@ package graphics
 import (
 	"image/color"
 
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 //ICanvas is used to implement basic canvas system used for rendering

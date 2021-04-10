@@ -9,8 +9,8 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/game"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/strategy"
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 func main() {

@@ -6,7 +6,7 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 //Board is struct used to implement board for game, which uses BoardDefinition

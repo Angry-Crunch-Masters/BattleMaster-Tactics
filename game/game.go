@@ -6,8 +6,8 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/logic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/strategy"
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/inpututil"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 //Game is struct defining all game logic

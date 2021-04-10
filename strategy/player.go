@@ -4,7 +4,7 @@ import (
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/graphics"
 	"github.com/Angry-Crunch-Masters/BattleMaster-Tactics/resources"
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 //Player struct is used for player informations
