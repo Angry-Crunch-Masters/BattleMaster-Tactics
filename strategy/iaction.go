@@ -5,6 +5,6 @@ type IAction interface {
 	GetActionDescription() string
 	GetActionCost(actionVariant int) int
 	GetActionVariantsNumber() int
-	IsActionPossible(entity IStrategyEntity) bool
-	PerformAction(entity IStrategyEntity)
+	IsActionPossible() bool
+	PerformAction()
 }

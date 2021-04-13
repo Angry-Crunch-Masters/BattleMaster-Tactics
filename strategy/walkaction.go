@@ -19,10 +19,10 @@ func (action *WalkAction) GetActionVariantsNumber() int {
 	return len(action.walkVariants)
 }
 
-func (action *WalkAction) IsActionPossible(entity IStrategyEntity) bool {
+func (action *WalkAction) IsActionPossible() bool {
 	return false
 }
 
-func (action *WalkAction) PerformAction(entity IStrategyEntity) {
+func (action *WalkAction) PerformAction() {
 
 }
