@@ -14,7 +14,6 @@ type Game struct {
 	board                        *Board
 	resourcesManager             *resources.ResourceManager
 	entitiesManager              *basic.EntityManager
-	entities                     []basic.IEntity
 	state                        InputState
 	cameraXOffset, cameraYOffset float64
 	canvasCameraOffset           float64
@@ -137,6 +136,9 @@ func (game *Game) AppendEntity(entity basic.IEntity, entityType basic.EntityType
 }
 
 //CreateEntity creates entity for game
-func (game *Game) CreateEntity(inputData basic.EntityBasicData, entityType basic.EntityType) {
-	game.mainPlayer.AddEntity(game.entitiesManager.AddEntity(entityType, inputData))
+func (game *Game) CreateEntity(inputData basic.EntityBasicData, entityType basic.EntityType, ownerID int) {
+	entity := game.entitiesManager.AddEntity(entityType, inputData)
+	if ownerID >= 0 && ownerID < len(game.players) {
+		game.players[ownerID].AddEntity(entity)
+	}
 }

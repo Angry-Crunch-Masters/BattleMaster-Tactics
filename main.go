@@ -28,6 +28,7 @@ func main() {
 	mainGame := &game.Game{}
 	creator := strategy.InitPlayerCreator()
 	mainPlayer, _ := creator.CreatePlayer("player")
+	cpuPlayer, _ := creator.CreatePlayer("cpu1")
 	mainGame.InitGame(fieldSize, zoom)
 	mainGame.AddResource(warriorImage, "warrior", resources.Graphics)
 	mainGame.AddResource(grassImage, "grass", resources.Graphics)
@@ -35,6 +36,7 @@ func main() {
 	mainGame.AddResource(frameImage, "frame", resources.Graphics)
 	mainGame.AddResource(actionsImage, "actions", resources.Graphics)
 	mainGame.AddPlayer(mainPlayer, true)
+	mainGame.AddPlayer(cpuPlayer, false)
 	mainGame.AddCreators(map[basic.EntityType]basic.IEntityCreator{basic.StrategyEntity: &strategy.BasicStrategyEntityCreator{}})
 
 	definiton := &game.BoardDefinition{NumberOfColumns: 8, NumberOfRows: 8, FieldSize: int(fieldSize)}
@@ -43,11 +45,17 @@ func main() {
 	mainGame.SetBoard(board)
 
 	mainGame.CreateEntity(basic.EntityBasicData{X: 6, Y: 4, Resource: "warrior",
-		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
+		Data: &strategy.AdditionalStrategyEntityData{ActionsNames: []string{"walk"}}},
+		basic.StrategyEntity, mainPlayer.GetPlayerID())
 	mainGame.CreateEntity(basic.EntityBasicData{X: 4, Y: 6, Resource: "warrior",
-		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
+		Data: &strategy.AdditionalStrategyEntityData{ActionsNames: []string{"walk"}}},
+		basic.StrategyEntity, mainPlayer.GetPlayerID())
 	mainGame.CreateEntity(basic.EntityBasicData{X: 3, Y: 3, Resource: "warrior",
-		Data: &strategy.AdditionalEntityData{OwnerID: mainPlayer.GetPlayerID()}}, basic.StrategyEntity)
+		Data: &strategy.AdditionalStrategyEntityData{ActionsNames: []string{"walk"}}},
+		basic.StrategyEntity, mainPlayer.GetPlayerID())
+	mainGame.CreateEntity(basic.EntityBasicData{X: 2, Y: 1, Resource: "warrior",
+		Data: &strategy.AdditionalStrategyEntityData{ActionsNames: []string{"walk"}}},
+		basic.StrategyEntity, cpuPlayer.GetPlayerID())
 
 	ebiten.SetWindowSize(gameSizeX, gameSizeY)
 	ebiten.SetWindowTitle("BattleMaster Tactics")

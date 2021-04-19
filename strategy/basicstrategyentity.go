@@ -6,23 +6,18 @@ import "github.com/Angry-Crunch-Masters/BattleMaster-Tactics/basic"
 type BasicStrategyEntity struct {
 	*basic.BasicEntity
 	ownerID          int
-	availableActions []IAction
+	availableActions []string
 }
 
-//GetOwner gets owner of entity
-func (entity *BasicStrategyEntity) GetOwner() int {
-	return entity.ownerID
-}
-
-func (entity *BasicStrategyEntity) AddPossibleAction(action IAction) {
-	entity.availableActions = append(entity.availableActions, action)
+func (entity *BasicStrategyEntity) AddPossibleAction(actionName string) {
+	entity.availableActions = append(entity.availableActions, actionName)
 }
 
 //InitStrategyEntity inits strategy entity
-func InitStrategyEntity(x int, y int, name string, ownerID int) *BasicStrategyEntity {
+func InitStrategyEntity(x int, y int, name string, ownerID int, actionsNames []string) *BasicStrategyEntity {
 	entity := &BasicStrategyEntity{}
 	entity.BasicEntity = basic.InitEntity(x, y, name)
 	entity.ownerID = ownerID
-	entity.availableActions = make([]IAction, 0)
+	entity.availableActions = actionsNames
 	return entity
 }
