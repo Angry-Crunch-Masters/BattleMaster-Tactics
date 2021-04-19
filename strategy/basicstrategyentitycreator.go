@@ -10,7 +10,7 @@ type BasicStrategyEntityCreator struct {
 func (creator *BasicStrategyEntityCreator) CreateEntity(inputData basic.EntityBasicData) basic.IEntity {
 	strategyAsset, ok := inputData.Data.(*AdditionalStrategyEntityData)
 	if ok {
-		return InitStrategyEntity(inputData.X, inputData.Y, inputData.Resource, strategyAsset.OwnerID, strategyAsset.ActionsNames)
+		return InitStrategyEntity(inputData.X, inputData.Y, inputData.Resource, strategyAsset.ActionsNames)
 	}
 	return nil
 }
