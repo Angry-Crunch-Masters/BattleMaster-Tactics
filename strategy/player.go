@@ -69,7 +69,7 @@ func (player *Player) ApplyEffects(canvas graphics.ICanvas) {
 		if ok && (len(player.entities)-1 >= player.actualEntityCounter) {
 			x := player.entities[player.actualEntityCounter].GetX()
 			y := player.entities[player.actualEntityCounter].GetY()
-			canvas.DrawImage(checkedBitmap, float64(x*32), float64(y*32))
+			canvas.DrawSprite(checkedBitmap, float64(x), float64(y))
 		}
 	}
 }

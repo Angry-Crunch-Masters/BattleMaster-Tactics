@@ -96,12 +96,12 @@ func (game *Game) getUnitInfo() {
 func (game *Game) Draw(screen *ebiten.Image) {
 	if game.board != nil {
 		mainCanvas := &graphics.Canvas{}
-		mainCanvas.InitCanvas(screen)
+		mainCanvas.InitCanvas(screen, game.board.definition.FieldSize, game.board.definition.FieldSize)
 		mainCanvas.SetCameraOffset(0, 0)
 
 		gameImage := ebiten.NewImage(256, 256)
 		gameCanvas := &graphics.Canvas{}
-		gameCanvas.InitCanvas(gameImage)
+		gameCanvas.InitCanvas(gameImage, game.board.definition.FieldSize, game.board.definition.FieldSize)
 		gameCanvas.SetCameraOffset(game.cameraXOffset, game.cameraYOffset)
 		game.board.DrawBoard(gameCanvas, game.resourcesManager, *game.entitiesManager.GetEntities())
 		for _, effectProvider := range game.effectProviders {

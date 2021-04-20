@@ -9,14 +9,17 @@ import (
 
 //Canvas is structure used for drawing on canvas/surface
 type Canvas struct {
-	surface          *ebiten.Image
-	xOffset, yOffset float64
-	x, y             float64
+	surface            *ebiten.Image
+	xOffset, yOffset   float64
+	x, y               float64
+	minimalW, minimalH int
 }
 
 //InitCanvas is used to init canvas
-func (canvas *Canvas) InitCanvas(surface *ebiten.Image) {
+func (canvas *Canvas) InitCanvas(surface *ebiten.Image, minimalW int, minimalH int) {
 	canvas.surface = surface
+	canvas.minimalW = minimalW
+	canvas.minimalH = minimalH
 	canvas.xOffset = 0
 	canvas.yOffset = 0
 	canvas.x = 0
@@ -43,6 +46,10 @@ func (canvas *Canvas) DrawImage(img *ebiten.Image, x, y float64) {
 		options.GeoM.Translate(x+canvas.xOffset, y+canvas.yOffset)
 		canvas.surface.DrawImage(img, options)
 	}
+}
+
+func (canvas *Canvas) DrawSprite(img *ebiten.Image, x, y float64) {
+	canvas.DrawImage(img, x*float64(canvas.minimalW), y*float64(canvas.minimalH))
 }
 
 //SetCameraOffset sets camera offset for canvas
@@ -80,4 +87,8 @@ func (canvas *Canvas) GetPosition() (float64, float64) {
 
 func (canvas *Canvas) getSurface() *ebiten.Image {
 	return canvas.surface
+}
+
+func (canvas *Canvas) GetMinimalSize() (int, int) {
+	return canvas.minimalW, canvas.minimalH
 }

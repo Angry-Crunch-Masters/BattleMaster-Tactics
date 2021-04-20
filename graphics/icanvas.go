@@ -11,7 +11,9 @@ type ICanvas interface {
 	DrawRect(x, y, width, height float64, clr color.Color)
 	Fill(clr color.Color)
 	DrawImage(img *ebiten.Image, x, y float64)
+	DrawSprite(img *ebiten.Image, x, y float64)
 	DrawCanvas(drawnCanvas ICanvas, x, y float64)
 	GetPosition() (float64, float64)
+	GetMinimalSize() (int, int)
 	getSurface() *ebiten.Image
 }
